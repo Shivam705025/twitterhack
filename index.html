@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Twitter Followers</title>
+</head>
+<body>
+  <h1>Twitter Followers</h1>
+  <button onclick="getFollowers()">Get Followers</button>
+  <ul id="followersList"></ul>
+
+  <script>
+    function getFollowers() {
+      const twitterId = '@elonmusk'; // Replace with the Twitter ID you want to fetch followers for
+      const apiUrl = `https://api.twitter.com/1.1/followers/ids.json?screen_name=${twitterId}`;
+
+      // Make an AJAX request to the Twitter API
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', apiUrl);
+      xhr.setRequestHeader('Authorization', 'Bearer 1218071770307018752-kvTohgQDWxeAtOqvv91An5UloCVTM9'); // Replace with your actual API access token
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          const followersList = document.getElementById('followersList');
+          followersList.innerHTML = '';
+
+          for (const followerId of response.ids) {
+            const li = document.createElement('li');
+            li.textContent = followerId;
+            followersList.appendChild(li);
+          }
+        }
+      };
+
+      xhr.send();
+    }
+  </script>
+</body>
+</html>
